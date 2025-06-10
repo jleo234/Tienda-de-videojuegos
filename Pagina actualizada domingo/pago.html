@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Finalizar Compra - Tienda de Videojuegos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Arial', sans-serif;
+    }
+    header {
+      background-color: #343a40;
+      color: white;
+      padding: 1.5rem 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .btn-volver {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+    .form-control:focus {
+      border-color: #28a745;
+      box-shadow: 0 0 8px rgba(40,167,69,0.5);
+    }
+    .btn-pay {
+      background-color: #28a745;
+      border: none;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    .btn-pay:hover {
+      background-color: #218838;
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+    }
+    .gracias-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .img-gracias {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+    /* Animación bounce */
+    @keyframes miniBounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    .animar-bounce {
+      animation: miniBounce 1s ease;
+    }
+    .text-gracias {
+      color: #ff6699; /* color Kasane Teto */
+      font-weight: bold;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="btn-volver">← Volver al inicio</a>
+  <h1>Finalizar Compra</h1>
+</header>
+
+<main id="contenidoPrincipal">
+  <div class="row align-items-center">
+    <div class="col-md-6 mb-4 mb-md-0">
+      <form id="formPago" novalidate>
+        <h3 class="mb-4 text-success"><i class="bi bi-credit-card-2-front-fill"></i> Información de Pago</h3>
+
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre completo</label>
+          <input type="text" class="form-control" id="nombre" placeholder="Juan Pérez" required />
+          <div class="invalid-feedback">Por favor, ingresa tu nombre completo.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="tarjeta" class="form-label">Número de tarjeta</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-credit-card"></i></span>
+            <input type="text" class="form-control" id="tarjeta" placeholder="1234 5678 9012 3456" maxlength="19" pattern="[\d ]{13,19}" required />
+            <div class="invalid-feedback">Ingresa un número de tarjeta válido.</div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-6">
+            <label for="expiracion" class="form-label">Fecha de expiración</label>
+            <input type="month" class="form-control" id="expiracion" min="2023-06" required />
+            <div class="invalid-feedback">Selecciona la fecha de expiración.</div>
+          </div>
+
+          <div class="col-6">
+            <label for="cvv" class="form-label">CVV</label>
+            <input type="password" class="form-control" id="cvv" maxlength="4" pattern="\d{3,4}" placeholder="123" required />
+            <div class="invalid-feedback">Ingresa un CVV válido.</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-pay w-100">Pagar ahora</button>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <img src="imagenes/pago.png" alt="Pago seguro" class="img-fluid rounded shadow" loading="lazy" />
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Tienda de Videojuegos. Todos los derechos reservados.</p>
+</footer>
+
+<audio id="audioTeto" src="css/teto.mp3"></audio>
+
+<script>
+  function tocarSonidoYAnimar(img) {
+    const audio = document.getElementById("audioTeto");
+    audio.currentTime = 0;
+    audio.volume = 0.2;
+    audio.play();
+
+    // Quitar clase si ya tiene para reiniciar animación
+    img.classList.remove('animar-bounce');
+
+    // Forzar reflow para reiniciar animación
+    void img.offsetWidth;
+
+    // Añadir clase para animar
+    img.classList.add('animar-bounce');
+
+    // Remover clase animar-bounce cuando termine animación
+    img.addEventListener('animationend', () => {
+      img.classList.remove('animar-bounce');
+    }, { once: true });
+  }
+
+  (() => {
+    'use strict';
+    const form = document.getElementById('formPago');
+    const main = document.getElementById('contenidoPrincipal');
+
+    form.addEventListener('submit', (event) => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+        form.classList.add('was-validated');
+        return;
+      }
+
+      event.preventDefault();
+
+      main.innerHTML = `
+        <div class="gracias-container">
+          <img src="imagenes/THANKS2.png" alt="Kasane Teto 1" class="img-gracias" onclick="tocarSonidoYAnimar(this)">
+          <h2 class="text-gracias mb-0">¡Gracias por tu compra!</h2>
+          <img src="imagenes/THANKS.png" alt="Kasane Teto 2" class="img-gracias" onclick="tocarSonidoYAnimar(this)">
+        </div>
+        <div class="text-center">
+          <a href="index.html" class="btn btn-success px-4 py-2">Volver al inicio</a>
+        </div>
+      `;
+    });
+  })();
+</script>
+
+</body>
+</html>
